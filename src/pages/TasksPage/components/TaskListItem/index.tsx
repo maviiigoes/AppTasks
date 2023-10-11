@@ -75,7 +75,7 @@ export function TaskListItem({ task, onRemove, onSave }: TaskListItemProps) {
           <p>Task ID: {task.id}</p>
           <p>Created: {task.created}</p>
           <p>Description: {task.description}</p>
-          <p>Created: {task.created_at}</p>
+          <p>Created {task.created_at}</p>
           
         </div> 
       )}

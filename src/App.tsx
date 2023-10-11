@@ -1,60 +1,61 @@
-import { useMemo } from 'react'
-import './App.css'
-import { useAuth } from './contexts/AuthContext'
-import { HomePage } from './pages/HomePages'
-import { LoginPage } from './pages/LoginPage'
-import { NotFoundPage } from './pages/NotFound'
-import { TasksPage } from './pages/TasksPage'
-
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
-/* import { ProtectedRoute } from './components/ProtectedRoute'
- */import { TaskPage } from './pages/TaskPage'
+import { BrowserRouter, Route, Routes, Link,  } from 'react-router-dom';
+import  { useMemo } from 'react';
+import { LoginPage } from './pages/LoginPage';
+import { HomePage } from './pages/HomePages';
+import { NotFoundPage } from './pages/NotFound';
+import { TaskPage } from './pages/TaskPage';
+import { useAuth } from './contexts/AuthContext';
+import { TasksPage } from './pages/TasksPage';
+import './App.css';
 
 function App() {
-  const { signout, isAuthenticated, user } = useAuth()
+  const { signout, isAuthenticated, user } = useAuth();
 
   const authBlock = useMemo(() => {
     return (
-      isAuthenticated ?
-        <p>{user!.username}
+      isAuthenticated ? (
+        <p>
+          {user?.username}
           <button onClick={() => { signout() }}>Sair</button>
         </p>
-        : <p>Olá Visitante!</p>)
-  }, [isAuthenticated])
+      ) : (
+        <p>Olá Visitante!</p>
+      )
+    );
+  }, [isAuthenticated]);
 
+
+
+
+  
   return (
-    <div>
-      <BrowserRouter>
-        <header>
-          <h1>Tasks App</h1>
-          <span>
-            {authBlock}
-          </span>
-          <nav>
-            <ul>
-              <li><NavLink to="/">Home</NavLink></li>
-              <li><NavLink to="/tasks">Tasks</NavLink></li>
-              <li><NavLink to="/login">Login</NavLink></li>
-            </ul>
-          </nav>
-        </header>
+    <BrowserRouter>
+      <header>
+        <h1>Tasks App</h1>
+        <span>{authBlock}</span>
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/tasks">Tasks</Link></li>
+            <li><Link to="/login">Login</Link></li>
+          </ul>
+        </nav>
+      </header>
 
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/tasks'>
-            <Route index element={ <TasksPage />} />
-            <Route path=':id' element={ <TaskPage /> } /> 
-          </Route>
-          <Route path='*' element={<NotFoundPage />} />
-        </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/tasks" element={<TasksPage />}>
+          <Route path=":id" element={<TaskPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
 
-        <footer>
-          <p>Fim por fim feito por mim!</p>
-        </footer>
-      </BrowserRouter>
-    </div>
-  )
+      <footer>
+        <p>Fim por fim feito por mim!</p>
+      </footer>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

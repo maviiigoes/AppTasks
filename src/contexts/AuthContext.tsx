@@ -18,8 +18,6 @@ const AuthContext = createContext<AuthContextType>(defaultValue)
 interface AuthProviderProps {
   children: React.ReactNode
 }
-
-// AuthProvider encapsula o AuthContextProvider
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null)
 
