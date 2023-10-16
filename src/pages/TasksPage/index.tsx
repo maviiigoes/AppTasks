@@ -1,11 +1,10 @@
-import { ReactNode, useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { ulid } from 'ulid'
-import { ActionType, TaskReducer } from '../../reducers/index'
+import { ActionType, TaskReducer } from '../../reducers/task_reducer'
 import { TaskForm } from './components/TaskForm'
 import { TaskList } from './components/TaskList'
 
 export interface Task {
-  [x: string]: ReactNode
   id: string
   name: string
   description?: string

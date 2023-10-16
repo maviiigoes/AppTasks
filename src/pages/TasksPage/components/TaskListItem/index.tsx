@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import  { useEffect, useMemo, useRef, useState } from "react";
 import { Task } from "../..";
 import { Link } from "react-router-dom";
+//import { TaskDetails }  from "../../../TaskDetails";
 
 interface TaskListItemProps {
   task: Task;
@@ -9,14 +10,15 @@ interface TaskListItemProps {
 }
 
 export function TaskListItem({ task, onRemove, onSave }: TaskListItemProps) {
+  
   const [isEditing, setIsEditing] = useState(false);
-  const [showDetails, setShowDetails] = useState(false); // Add a new state variable
+  const [showDetails, setShowDetails] = useState(false);
   const refInput = useRef<HTMLInputElement>(null);
   const refDone = useRef<HTMLInputElement>(null);
 
   const handleRemove = () => {
     onRemove(task);
-  }
+  };
 
   const handleSaveOrEdit = () => {
     if (isEditing) {
@@ -26,20 +28,20 @@ export function TaskListItem({ task, onRemove, onSave }: TaskListItemProps) {
     } else {
       setIsEditing(true);
     }
-  }
+  };
 
   const handleChangeDone = () => {
     task.done = refDone.current!.checked;
     onSave(task);
-  }
+  };
 
   const toggleDetails = () => {
-    setShowDetails(!showDetails); // Toggle the display of details
-  }
+    setShowDetails(!showDetails);
+  };
 
   useEffect(() => {
     refDone.current!.checked = task.done;
-  }, []);
+  }, [task.done]);
 
   useEffect(() => {
     if (isEditing) {
@@ -54,6 +56,8 @@ export function TaskListItem({ task, onRemove, onSave }: TaskListItemProps) {
 
   console.log("Item renderizado!");
 
+  //const formattedDate = task.created_at.toLocaleDateString();
+
   return (
     <li style={{ listStyle: "none" }}>
       <div style={{ display: "flex", gap: 10 }}>
@@ -65,19 +69,19 @@ export function TaskListItem({ task, onRemove, onSave }: TaskListItemProps) {
         )}
         <button onClick={handleSaveOrEdit}>{labelBtnEditar}</button>
         <button onClick={handleRemove}>Lixeira</button>
-          <button onClick={toggleDetails}>Details</button> {/* Add a "Details" button */}
+        <button onClick={toggleDetails}>Details</button>
       </div>
       {showDetails && (
         <div>
-         <Link to={`/tasks/${task.id}`}>Task Details</Link> 
-          
-          <p>Details:</p>
-          <p>Task ID: {task.id}</p>
-          <p>Created: {task.created}</p>
-          <p>Description: {task.description}</p>
-          <p>Created {task.created_at}</p>
-          
-        </div> 
+        <Link to={`/tasks/${task.id}`}>Task Details</Link> 
+         
+         <p>Details:</p>
+         <p>Task ID: {task.id}</p>
+         <p>Created: {task.name}</p>
+         <p>Description: {task.description}</p>
+         <p>Created: {task.created_at}</p>
+         
+       </div> 
       )}
     </li>
   );
